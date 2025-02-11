@@ -22,6 +22,8 @@ from .add_collider import MYADDON_OT_add_collider
 from .add_filename import MYADDON_OT_add_filename
 from .draw_collider import DrawCollider
 from .export_scene import MYADDON_OT_export_scene
+from .disabled import MYADDON_OT_add_disabled
+from .disabled import OBJECT_PT_disabled
 
 #メニュー項目描画
 def draw_menu_manual(self, context):
@@ -143,10 +145,6 @@ class OBJECT_PT_collider(bpy.types.Panel):
             self.layout.operator(MYADDON_OT_add_collider.bl_idname)
 
 
-
-
-
-
 #blenderに登録するクラスリスト
 classes = (MYADDON_OT_create_ico_sphere,
            MYADDON_OT_stretch_vertex,
@@ -157,6 +155,8 @@ classes = (MYADDON_OT_create_ico_sphere,
            MYADDON_OT_add_collider,
            OBJECT_PT_collider,
            MYADDON_OT_create_enemy_sortieroad,
+           MYADDON_OT_add_disabled,
+           OBJECT_PT_disabled
            )
 
 #アドオン有効化時コールバック
