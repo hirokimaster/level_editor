@@ -24,6 +24,11 @@ from .draw_collider import DrawCollider
 from .export_scene import MYADDON_OT_export_scene
 from .disabled import MYADDON_OT_add_disabled
 from .disabled import OBJECT_PT_disabled
+from .spawn import MYADDON_OT_spawn_point_symbol
+from .spawn import MYADDON_OT_create_spawn_point_symbol
+from .spawn import MYADDON_OT_create_player_spawn_point_symbol
+from .spawn import MYADDON_OT_create_enemy_spawn_point_symbol
+
 
 #メニュー項目描画
 def draw_menu_manual(self, context):
@@ -49,6 +54,8 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         self.layout.operator(MYADDON_OT_create_ico_sphere.bl_idname, text = MYADDON_OT_create_ico_sphere.bl_label)
         self.layout.operator(MYADDON_OT_create_enemy_sortieroad.bl_idname, text = MYADDON_OT_create_enemy_sortieroad.bl_label)
         self.layout.operator(MYADDON_OT_export_scene.bl_idname, text = MYADDON_OT_export_scene.bl_label)
+        self.layout.operator(MYADDON_OT_create_player_spawn_point_symbol.bl_idname, text=MYADDON_OT_create_player_spawn_point_symbol.bl_label)
+        self.layout.operator(MYADDON_OT_create_enemy_spawn_point_symbol.bl_idname, text=MYADDON_OT_create_enemy_spawn_point_symbol.bl_label)
 
 
     def submenu(self, context):
@@ -156,7 +163,11 @@ classes = (MYADDON_OT_create_ico_sphere,
            OBJECT_PT_collider,
            MYADDON_OT_create_enemy_sortieroad,
            MYADDON_OT_add_disabled,
-           OBJECT_PT_disabled
+           OBJECT_PT_disabled,
+           MYADDON_OT_spawn_point_symbol,
+           MYADDON_OT_create_spawn_point_symbol,
+           MYADDON_OT_create_player_spawn_point_symbol,
+           MYADDON_OT_create_enemy_spawn_point_symbol,
            )
 
 #アドオン有効化時コールバック
