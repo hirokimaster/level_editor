@@ -6,6 +6,7 @@ from .export_scene import MYADDON_OT_export_scene
 from .spawn import MYADDON_OT_create_player_spawn_point_symbol
 from .spawn import MYADDON_OT_create_enemy_spawn_point_symbol
 from .create_event_trigger import MYADDON_OT_create_event_trigger
+from .create_move_route import MYADDON_OT_create_move_route
 
 bl_info = {
     "name": "レベルエディタ",
@@ -39,6 +40,7 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         self.layout.operator(MYADDON_OT_create_player_spawn_point_symbol.bl_idname, text=MYADDON_OT_create_player_spawn_point_symbol.bl_label)
         self.layout.operator(MYADDON_OT_create_enemy_spawn_point_symbol.bl_idname, text=MYADDON_OT_create_enemy_spawn_point_symbol.bl_label)
         self.layout.operator(MYADDON_OT_create_event_trigger.bl_idname, text=MYADDON_OT_create_event_trigger.bl_label)
+        self.layout.operator(MYADDON_OT_create_move_route.bl_idname, text=MYADDON_OT_create_move_route.bl_label)
 
 
     def submenu(self, context):

@@ -17,7 +17,9 @@ from .spawn import MYADDON_OT_create_player_spawn_point_symbol
 from .spawn import MYADDON_OT_create_enemy_spawn_point_symbol
 from .create_event_trigger import MYADDON_OT_create_event_trigger
 from .create_event_trigger import MYADDON_OT_add_event_id
+from .create_event_trigger import OBJECT_PT_event_id
 from .topbar_my_menu import TOPBAR_MT_my_menu
+from .create_move_route import MYADDON_OT_create_move_route
 
 bl_info = {
     "name": "レベルエディタ",
@@ -58,7 +60,9 @@ classes = (MYADDON_OT_create_ico_sphere,
            MYADDON_OT_create_player_spawn_point_symbol,
            MYADDON_OT_create_enemy_spawn_point_symbol,
            MYADDON_OT_create_event_trigger,
-           MYADDON_OT_add_event_id
+           MYADDON_OT_add_event_id,
+           OBJECT_PT_event_id,
+           MYADDON_OT_create_move_route
            )
 
 #アドオン有効化時コールバック

@@ -65,10 +65,6 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         trans, rot, scale = object.matrix_local.decompose()
         #回転を Quaternion から Euler（3軸での回転角）に変換
         rot = rot.to_euler()
-        #ラジアンから度数法に変換
-        #rot.x = math.degrees(rot.x)
-        #rot.y = math.degrees(rot.y)
-        #rot.z = math.degrees(rot.z)
         #トランスフォーム情報をディクショナリに登録
         transform = dict()
         transform["translation"] = (trans.x,trans.y,trans.z)
@@ -76,23 +72,6 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         transform["scaling"] = (scale.x,scale.y,scale.z)
         #まとめて1個分のjsonオブジェクトに登録
         json_object["transform"] = transform
-
-        #曲線だったら制御点も出力するようにする
-        if object.type == "CURVE":
-            json_object["control_points"] = []
-            for spline in object.data.splines:
-                  # 始点
-                start_cp = {
-                    "start": (spline.points[0].co.x, spline.points[0].co.y, spline.points[0].co.z)
-                 }
-                json_object["control_points"].append(start_cp)
-
-                # 終点
-                end_cp = {
-                    "end": (spline.points[-1].co.x, spline.points[-1].co.y, spline.points[-1].co.z)
-                 }
-                json_object["control_points"].append(end_cp)
-                
 
         #カスタムプロパティ 'file_name'
         if "file_name" in object:
@@ -106,6 +85,22 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             collider["size"] = object["collider_size"].to_list()
             json_object["collider"] = collider 
 
+        # NURBSパス
+        if object.type == 'CURVE' and object.data.splines:
+            json_object["control_points"] = []
+            control_point_index = 0  # 制御点のインデックス
+            for spline in object.data.splines:
+                if spline.points:
+                    for point in reversed(spline.points):
+                        control_point = {
+                            "name": f"controlPoint{control_point_index}",  # シンプルな名前付け
+                            "x": point.co[0] + trans.x,
+                            "y": point.co[1] + trans.y,
+                            "z": point.co[2] + trans.z
+                        }
+                        json_object["control_points"].append(control_point)
+                        control_point_index += 1  # インデックスを更新
+               
         #1個分のjsonオブジェクトを親オブジェクトに登録
         data_parent.append(json_object)
 
@@ -175,12 +170,7 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             temp_str %= (object["collider_size"][0],object["collider_size"][1],object["collider_size"][2])
             self.write_and_print(file, temp_str)
 
-         #制御点の情報を出力
-        if "control_points" in object:
-             self.write_and_print(file, indent + "Control Points:")
-             for idx, point in enumerate(object["control_points"]):
-                 temp_str = indent + "\tPoint %d: (%f, %f, %f)" % (idx, point[0], point[1], point[2])
-                 self.write_and_print(file, temp_str)    
+       
                 
         self.write_and_print(file, indent + 'END')
         self.write_and_print(file,'')
