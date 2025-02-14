@@ -21,3 +21,17 @@ class MYADDON_OT_create_event_trigger(bpy.types.Operator):
 
         #オペレータの命令終了を通知
         return {'FINISHED'}
+
+
+#オペレータ カスタムプロパティ['event_id']追加
+class MYADDON_OT_add_event_id(bpy.types.Operator):
+    bl_idname = "myaddon.myaddo_ot_add_event_number"
+    bl_label = "イベント番号 追加"
+    bl_description = "['event_id']カスタムプロパティを追加します"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        #['event_id']カスタムプロパティを追加
+        context.object["event_id"] = 0 #初期はゼロ
+
+        return {"FINISHED"}
