@@ -85,6 +85,11 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             collider["size"] = object["collider_size"].to_list()
             json_object["collider"] = collider 
 
+        #カスタムプロパティ 'イベント番号'
+        if "event_id" in object:
+            json_object["event_id"] = object["event_id"]
+
+
         # NURBSパス
         if object.type == 'CURVE' and object.data.splines:
             json_object["control_points"] = []
